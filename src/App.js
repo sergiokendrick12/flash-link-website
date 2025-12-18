@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import ShippingWebsite from './ShippingWebsite';
+import AdminDashboard from './AdminDashboard';
+import AdminLogin from './AdminLogin';
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    setIsAuthenticated(!!token);
+  }, []);
+
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<ShippingWebsite />} />
+        <Route
+          path="/admin/login"
+          element={isAuthenticated ? <Navigate to="/admin" /> : <AdminLogin onLogin={handleLogin} />}
+        />
+        <Route
+          path="/admin"
+          element={isAuthenticated ? <AdminDashboard /> : <Navigate to="/admin/login" />}
+        />
+      </Routes>
+    </Router>
   );
 }
 
