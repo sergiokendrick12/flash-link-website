@@ -109,9 +109,9 @@ export default function AdminLogin({ onLogin }) {
                             />
                             <span className="ml-2 text-sm text-gray-600">Remember me</span>
                         </label>
-                        <a href="#" className="text-sm text-orange-500 hover:text-orange-600 font-semibold">
+                        <button className="text-sm text-orange-500 hover:text-orange-600 font-semibold bg-transparent border-none cursor-pointer p-0">
                             Forgot password?
-                        </a>
+                        </button>
                     </div>
 
                     <button
